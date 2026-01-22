@@ -9,6 +9,8 @@ const $ = s => document.querySelector(s);
 
 // extract uid & customerId from URL
 const [, uid, customerId] = location.pathname.split('/').slice(-3);
+//const uid = `HHCrOMN79LfcMPJWYWXLcy6n4LF2`
+//const customerId= '-OjZebqAtptfQLPlKWQc';
 $('#test').textContent=`${uid}, ${customerId}`
 if (!uid || !customerId) {
   $('#error').textContent = 'Invalid tracking link';
@@ -17,6 +19,8 @@ if (!uid || !customerId) {
 }
 
 const customerRef = ref(db, `customers/${uid}/${customerId}`);
+
+
 
 get(customerRef).then(snapshot => {
   if (!snapshot.exists()) {
