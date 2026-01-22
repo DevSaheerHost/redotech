@@ -1,10 +1,9 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getDatabase, ref, set, push, onValue, update } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-import {firebaseConfig} from './firebase/config.js';
+import {firebaseConfig} from '../firebase/config.js';
 const $ = s => document.querySelector(s)
 
 
