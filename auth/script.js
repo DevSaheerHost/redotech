@@ -135,6 +135,7 @@ onAuthStateChanged(auth, (user) => {
 
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
   App.ui.form.onsubmit = handleSubmit;
   App.ui.switchAuthMode.onclick=e=>toggleAuthMode(e)

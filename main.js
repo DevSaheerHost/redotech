@@ -181,6 +181,7 @@ onAuthStateChanged(auth, (user) => {
   } else {
     console.log('Not logged in');
     window.location='./auth'
+    $('#logout-btn').textContent='LogIn'
   }
 });
 
@@ -324,3 +325,6 @@ const resetForm = () => {
 
   document.querySelector('form').reset();
 };
+
+
+$('#logout-btn').onclick=()=>auth.signOut()
