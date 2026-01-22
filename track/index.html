@@ -3,30 +3,46 @@
 <head>
   <title>Service Tracking</title>
   <link rel="stylesheet" href="../style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-  <div id="app">
-    <h2>Service Status</h2>
-    <p id="test"></p>
-    <p id="loading">Loading...</p>
+<div id="app" class="track-app">
 
-    <div id="card" class="hidden">
+  <div class="track-header">
+    <h2>Service Tracking</h2>
+    <p class="sub">Live status of your device repair</p>
+  </div>
+  <p id="test"></p>
+
+  <div id="loading" class="loader-card">
+    Checking your service status...
+  </div>
+
+  <div id="card" class="track-card hidden">
+
+    <div class="customer-info">
       <h3 id="name"></h3>
       <p id="device"></p>
-      <p id="issue"></p>
+      <p class="issue" id="issue"></p>
+    </div>
 
-      <p>
-        Status:
-        <span id="status" class="badge"></span>
-      </p>
+    <div class="status-box">
+      <span class="label">Current Status</span>
+      <span id="status" class="badge"></span>
+    </div>
 
+    <div class="history-box">
+      <h4>Status History</h4>
       <ul id="history"></ul>
     </div>
 
-    <p id="error" class="error"></p>
   </div>
 
-  <script type="module" src="/track/script.js"></script>
+  <div id="error" class="error-card"></div>
+
+</div>
+
+<script type="module" src="/track/script.js"></script>
 </body>
 </html>
