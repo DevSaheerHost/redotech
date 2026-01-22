@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://redotech.vercel.app/sitemap.xml

@@ -4,6 +4,7 @@
   line-height: 1.5;
   font-weight: 400;
   color: #0f172a;
+  color: #fff;
   background-color: #f8fafc;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -21,7 +22,9 @@ min-height: 100dvh;
   background: radial-gradient(circle at 10% 20%, #e2e8f0 0, transparent 30%),
     radial-gradient(circle at 90% 10%, #e2e8f0 0, transparent 25%),
     #f8fafc;
-    ;
+      background: linear-gradient(135deg,#0f172a,#020617);
+
+
 }
 
 a {
@@ -49,6 +52,7 @@ button {
   max-width: 500px;
   margin: 120px auto;
   background: #fff;
+  background: #020617;
   padding: 32px;
   border-radius: 16px;
   box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
@@ -58,6 +62,10 @@ button {
 
 .card {
   background: #fff;
+    background: rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+
+
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
@@ -85,7 +93,11 @@ button {
   gap: 12px;
   align-items: center;
   background: #f8fafc;
+      background: rgba(255,255,255,0.05);
+
   border: 1px solid #e2e8f0;
+    border:1px solid rgba(255,255,255,0.1);
+
   padding: 10px 14px;
   border-radius: 14px;
 }
@@ -158,10 +170,17 @@ h3 {
   width: 100%;
   padding: 12px;
   border: 1px solid #e2e8f0;
+  border:1px solid rgba(255,255,255,0.1);
+
   border-radius: 12px;
   font-size: 15px;
   background: #f8fafc;
+    
+      background: rgba(255,255,255,0.08) !important;
+
+
   transition: border-color 0.2s, box-shadow 0.2s;
+  color: #fff;
 }
 
 .field input:focus,
@@ -220,6 +239,8 @@ h3 {
 
 .list-item {
   border: 1px solid #e2e8f0;
+    border:1px solid rgba(255,255,255,0.3);
+
   border-radius: 14px;
   padding: 14px;
   display: grid;
@@ -254,6 +275,10 @@ h3 {
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   background: #f8fafc;
+        background: rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+
+color: #B2B2B2;
 }
 
 .badge {
@@ -319,6 +344,8 @@ h3 {
   bottom: 2rem;
   right: 2rem;
   background: #fff;
+      background: rgba(255,255,255,0.05);
+backdrop-filter: blur(2px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.29);
   border-radius: 100px;
   width: 50px;
@@ -333,6 +360,9 @@ h3 {
 .list-item{
   position: relative;
 }
+.list-item a{
+  text-decoration: underline;
+}
 .tool{
   position: absolute;
   top: 1rem;
@@ -343,7 +373,39 @@ h3 {
   color: #FF0000;
 }
 
+.ghost{
+  color:#93c5fd;
 
+}
+
+.field span{
+  font-weight: 600;
+  color: #93c5fd;
+}
+
+
+::placeholder{
+  color: #64748b;
+}
+
+
+
+
+.install-btn{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  padding:12px 20px;
+  font-size:14px;
+  font-weight:600;
+  box-shadow:0 10px 30px rgba(37,99,235,.4);
+  z-index:999;
+}
 
 .hidden{
   display: none;

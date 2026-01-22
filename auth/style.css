@@ -7,6 +7,7 @@
   background-color: #f8fafc;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  color: #fff;
 }
 
 *,
@@ -22,6 +23,9 @@ min-height: 100dvh;
     radial-gradient(circle at 90% 10%, #e2e8f0 0, transparent 25%),
     #f8fafc;
     padding: 1px 2rem;
+    
+          background: linear-gradient(135deg,#0f172a,#020617);
+
 }
 
 a {
@@ -49,6 +53,8 @@ button {
   max-width: 500px;
   margin: 120px auto;
   background: #fff;
+    background: rgba(255,255,255,0.05);
+
   padding: 32px;
   border-radius: 16px;
   box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
@@ -315,8 +321,20 @@ h3 {
 
 
 
+input{
+  background: rgba(255,255,255,0.08) !important;
+  color: #fff;
+    border:1px solid rgba(255,255,255,0.1) !important;
+}
 
+.field span{
+  font-weight: 600;
+  color: #637DA3;
+}
 
+::placeholder{
+  color: #64748b;
+}
 .hidden{
   display: none;
 }

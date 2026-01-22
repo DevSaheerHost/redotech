@@ -6,7 +6,7 @@ console.log('App running Smother')
 import {firebaseConfig} from '/firebase/config.js';
 const $ = s => document.querySelector(s)
 
-
+const CACHE_KEY = 'redotech_customers';
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getDatabase(app);
@@ -64,25 +64,45 @@ const setSaving = (v) => App.busy = v;
 
 
 
-const fetchData=()=>{
-  const listRef = ref(db, `customers/${App.auth.user.uid}`)
-    const unsub = onValue(listRef, (snapshot) => {
-      const data = snapshot.val() || {}
-      const parsed = Object.entries(data).map(([id, value]) => ({
-        id,
-        ...value,
-      }))
-      parsed.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
-      if (parsed.length===0) {
-        $('#loadingLabel').textContent='No customers yet.'
-      } else(
-        $('#loadingLabel')&& $('#loadingLabel').remove()
-      )
-      setCustomers(parsed)
-      setLoading(false)
-    })
-    return () => unsub()
-}
+const fetchData = () => {
+  const uid = App.auth.user.uid;
+
+  // 🚀 1. Load from cache first (instant UI)
+  const cached = loadCache();
+  if (cached) {
+    console.log('Loaded from cache');
+    setCustomers(cached);
+    setLoading(false);
+  }
+
+  // 🔄 2. Then listen to Firebase (real-time + fresh)
+  const listRef = ref(db, `customers/${uid}`);
+  const unsub = onValue(listRef, (snapshot) => {
+    const data = snapshot.val() || {};
+    const parsed = Object.entries(data).map(([id, value]) => ({
+      id,
+      ...value,
+    }));
+
+    parsed.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+    if (parsed.length === 0) {
+      $('#loadingLabel').textContent = 'No customers yet.';
+    } else {
+      $('#loadingLabel') && $('#loadingLabel').remove();
+    }
+
+    // ✅ Update UI
+    setCustomers(parsed);
+    setLoading(false);
+
+    // 💾 Save to cache
+    saveCache(parsed);
+
+  });
+
+  return () => unsub();
+};
 const setCustomers=(d)=>{
   $('#customerList').innerHTML = d.map((c)=>getCustomerList(c)).join('')
 }
@@ -134,7 +154,8 @@ const getCustomerList=c=>`
                         ${StatusBadge(c.status)}
                       </p>
                       <p class="muted small">
-                        ${c.device} • ${c.phone}
+                        ${c.device} • <a href="tel:${c.phone}">${c.phone}</a>
+
                       </p>
                       <p class="muted small">${c.issue}</p>
                     </div>
@@ -372,4 +393,56 @@ const resetForm = () => {
 };
 
 
-$('#logout-btn').onclick=()=>auth.signOut()
+$('#logout-btn').onclick=()=>{
+  localStorage.removeItem(CACHE_KEY)
+  auth.signOut()}
+
+
+// install app btn visibility 
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.classList.remove('hidden');
+});
+
+installBtn?.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log('Install choice:', outcome);
+
+  deferredPrompt = null;
+  installBtn.classList.add('hidden');
+});
+
+
+
+
+// save to localstorage 
+
+
+const saveCache = (data) => {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+      at: Date.now(),
+      data
+    }));
+  } catch (e) {
+    console.warn('Cache save failed', e);
+  }
+};
+
+const loadCache = () => {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw).data || null;
+  } catch (e) {
+    console.warn('Cache load failed', e);
+    return null;
+  }
+};

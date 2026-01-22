@@ -9,9 +9,9 @@ const db = getDatabase(app);
 const $ = s => document.querySelector(s);
 
 // extract uid & customerId from URL
-const [, uids, customerIds] = location.pathname.split('/').slice(-3);
-const uid = `HHCrOMN79LfcMPJWYWXLcy6n4LF2`
-const customerId= '-Oj_HhEg3h5YyevwilnW';
+const [, uid, customerId] = location.pathname.split('/').slice(-3);
+//const uid = `HHCrOMN79LfcMPJWYWXLcy6n4LF2`
+//const customerId= '-Oj_HhEg3h5YyevwilnW';
 $('#test').textContent=`${uid}, ${customerId}`
 if (!uid || !customerId) {
   $('#error').textContent = 'Invalid tracking link';
@@ -45,6 +45,13 @@ onValue(customerRef, (snapshot) => {
   if (data.status) {
     statusEl.classList.add(data.status);
   }
+  
+  // ALERT 
+  
+  //if (window.lastStatus && window.lastStatus !== data.status) {
+  // alert('Status updated to: ' + data.status);
+//}
+//window.lastStatus = data.status;
 
   // HISTORY
   const history = Object.values(data.statusHistory || {})
@@ -57,3 +64,11 @@ onValue(customerRef, (snapshot) => {
   $('#card').classList.remove('hidden');
   $('#loading')?.remove();
 });
+
+
+
+
+if (window.lastStatus && window.lastStatus !== data.status) {
+  alert('Status updated to: ' + data.status);
+}
+window.lastStatus = data.status;

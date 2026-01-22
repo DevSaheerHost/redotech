@@ -5,21 +5,63 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>HTML</title>
   
   <!-- HTML -->
-  
+  <!-- Basic SEO -->
+<title>RedoTech Service Center | Track Your Repair</title>
+<meta name="description" content="RedoTech Service Center - Track your mobile and device repair status in real time. Fast, reliable service updates." />
+<meta name="keywords" content="RedoTech, mobile service, repair tracking, phone repair, service center" />
+<meta name="author" content="RedoTech" />
+
+<!-- Viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#020617">
+
+<!-- iOS Support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RedoTech">
+
+<!-- App Icons -->
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png">
+
+<!-- Open Graph (WhatsApp, FB preview) -->
+<meta property="og:title" content="RedoTech Service Tracking">
+<meta property="og:description" content="Track your device repair status live with RedoTech.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://redotech.vercel.app">
+<meta property="og:image" content="https://redotech.vercel.app/icons/icon-512.png">
+
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-startup-image" href="/icons/splash.png">
+
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://www.gstatic.com">
+<link rel="preconnect" href="https://firebasedatabase.googleapis.com">
 </head>
 
 <body>
+  <section style="display:none">
+  <h1>RedoTech Mobile Service Center</h1>
+  <p>RedoTech provides fast mobile phone repair, service tracking, and real-time repair status updates.</p>
+  <p>Track your phone repair online with RedoTech service center system.</p>
+</section>
     <div class="page">
       <header class="topbar">
         <div>
           <h1>Repair desk</h1>
           <p class="muted">Track devices and share live status updates.</p>
+          <button id="installBtn" class="install-btn hidden">
+  📲 Install RedoTech App
+</button>
         </div>
         <div class="user-chip">
           <span id="emailLabel"></span>
@@ -65,6 +107,16 @@
                 />
               </label>
               <label class="field">
+                <span>Issue description</span>
+                <textarea
+                  rows="3"
+                  placeholder="Screen cracked, no face ID..."
+                  required
+                  id="issue"
+                ></textarea>
+            </label>
+            
+              <label class="field">
                 <span>Status</span>
                 <select>
                   <option value="pending">Pending</option>
@@ -75,15 +127,7 @@
                 </select>
               </label>
             </div>
-            <label class="field">
-              <span>Issue description</span>
-              <textarea
-                rows="3"
-                placeholder="Screen cracked, no face ID..."
-                required
-                id="issue"
-              ></textarea>
-            </label>
+            
             <button class="primary" type="submit">
               Add customer
             </button>
@@ -112,5 +156,15 @@
     </button>
 
   <script type="module" src="./main.js"></script>
+  
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registered', reg))
+      .catch(err => console.error('SW failed', err));
+  });
+}
+</script>
 </body>
 </html>
