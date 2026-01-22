@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getDatabase, ref, set, push, onValue, update } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
+console.log('App running Smother')
 //import {firebaseConfig} from '/firebase/config.js';
 const firebaseConfig = {
   apiKey: "AIzaSyCDFiJbMP9O66GzqCOZoQr7xtnax-7-Mno",
