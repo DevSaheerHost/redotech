@@ -9,7 +9,7 @@ const $ = s => document.querySelector(s);
 
 // extract uid & customerId from URL
 const [, uid, customerId] = location.pathname.split('/').slice(-3);
-
+$('#test').textContent=`${uid}, ${customerId}`
 if (!uid || !customerId) {
   $('#error').textContent = 'Invalid tracking link';
   $('#loading').remove();
