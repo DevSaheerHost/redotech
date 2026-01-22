@@ -112,7 +112,7 @@ button {
   }
   .card.narrow,
   .auth-card {
-    margin: 48px auto;
+    margin: 48px 1rem;
   }
 }
 
