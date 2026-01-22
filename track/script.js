@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, onValue } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 import { firebaseConfig } from "../firebase/config.js";
 
 const app = initializeApp(firebaseConfig);
@@ -8,9 +9,9 @@ const db = getDatabase(app);
 const $ = s => document.querySelector(s);
 
 // extract uid & customerId from URL
-const [, uid, customerId] = location.pathname.split('/').slice(-3);
-//const uid = `HHCrOMN79LfcMPJWYWXLcy6n4LF2`
-//const customerId= '-OjZebqAtptfQLPlKWQc';
+const [, uids, customerIds] = location.pathname.split('/').slice(-3);
+const uid = `HHCrOMN79LfcMPJWYWXLcy6n4LF2`
+const customerId= '-Oj_HhEg3h5YyevwilnW';
 $('#test').textContent=`${uid}, ${customerId}`
 if (!uid || !customerId) {
   $('#error').textContent = 'Invalid tracking link';
@@ -22,22 +23,30 @@ const customerRef = ref(db, `customers/${uid}/${customerId}`);
 
 
 
-get(customerRef).then(snapshot => {
+onValue(customerRef, (snapshot) => {
   if (!snapshot.exists()) {
     $('#error').textContent = 'Tracking not found';
+    $('#loading')?.remove();
     return;
   }
 
   const data = snapshot.val();
 
-  $('#name').textContent = data.name;
-  $('#device').textContent = data.device;
-  $('#issue').textContent = data.issue;
+  $('#name').textContent = data.name || '';
+  $('#device').textContent = data.device || '';
+  $('#issue').textContent = data.issue || '';
 
-  $('#status').textContent = data.status;
-  $('#status').classList.add(data.status);
+  // STATUS (reset + update)
+  const statusEl = $('#status');
+  statusEl.textContent = data.status || 'Pending';
 
-  // status history
+  // remove old status classes
+  statusEl.className = 'badge';
+  if (data.status) {
+    statusEl.classList.add(data.status);
+  }
+
+  // HISTORY
   const history = Object.values(data.statusHistory || {})
     .sort((a, b) => b.at - a.at);
 
@@ -46,10 +55,5 @@ get(customerRef).then(snapshot => {
   ).join('');
 
   $('#card').classList.remove('hidden');
-})
-.catch(err => {
-  $('#error').textContent = err.message;
-})
-.finally(() => {
-  $('#loading').remove();
+  $('#loading')?.remove();
 });

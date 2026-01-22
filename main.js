@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getDatabase, ref, set, push, onValue, update } 
+import { getDatabase, ref, set, push, onValue, update, remove } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 console.log('App running Smother')
 import {firebaseConfig} from '/firebase/config.js';
@@ -76,7 +76,7 @@ const fetchData=()=>{
       if (parsed.length===0) {
         $('#loadingLabel').textContent='No customers yet.'
       } else(
-        $('#loadingLabel').remove()
+        $('#loadingLabel')&& $('#loadingLabel').remove()
       )
       setCustomers(parsed)
       setLoading(false)
@@ -149,10 +149,14 @@ const getCustomerList=c=>`
       <option value="done" ${c.status === 'done' ? 'selected' : ''}>Done</option>
     </select>
     
-    
-    <button class="ghost edit-btn" data-id="${c.id}">
-  Edit
-</button>
+<div class="tool">
+  <button class="ghost delete-btn" data-id="${c.id}">
+       Delete
+    </button>
+     <button class="ghost edit-btn" data-id="${c.id}">
+       Edit
+    </button>
+</div>
                     <button class="ghost copy-btn" data-url="${c.trackingUrl}">
                       Copy tracking link
                     </button>
@@ -220,7 +224,7 @@ const handleAdd = async (e) => {
   
   App.ui.form = {
   name: $('#name').value,
-  phone: $('#number').value,
+  phone: `91${$('#number').value}`,
   device: $('#device').value,
   issue: $('#issue').value,
   status: 'pending'
@@ -260,7 +264,8 @@ const customerRef = ref(db, `customers/${uid}/${customerId}`);
     await set(customerRef, payload);
 
     resetForm()
-
+fetchData()
+location.hash='';
   } catch (err) {
     setError(err.message || 'Unable to save customer');
   } finally {
@@ -269,6 +274,47 @@ const customerRef = ref(db, `customers/${uid}/${customerId}`);
 };
 
 const EditHandler = async (e) => {
+// --------- DELETE ---------
+const deleteBtn = e.target.closest('.delete-btn');
+if (deleteBtn) {
+  const id = deleteBtn.dataset.id;
+  const uid = App.auth.user.uid;
+
+  if (!id) {
+    console.error('No customer id for delete');
+    return;
+  }
+
+  const ok = confirm(
+    '⚠️ This will permanently delete this service record.\n\nAre you sure?'
+  );
+
+  if (!ok) return;
+
+  try {
+    const customerRef = ref(db, `customers/${uid}/${id}`);
+    await remove(customerRef);
+
+    console.log('Customer deleted:', id);
+
+    // Optional: remove from UI instantly
+    const row = deleteBtn.closest('.customer-row, .card, tr');
+    if (row) row.remove();
+
+    //alert('Service record deleted successfully.');
+
+  } catch (err) {
+    console.error('Delete failed:', err);
+    alert('Delete failed. Please try again.');
+  }
+
+  return; // ⛔ STOP HERE
+}
+  
+  
+  
+  
+  
 
   // ---------- COPY ----------
   const copyBtn = e.target.closest('.copy-btn');

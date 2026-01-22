@@ -330,6 +330,21 @@ h3 {
 
 
 
+.list-item{
+  position: relative;
+}
+.tool{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.delete-btn{
+  color: #FF0000;
+}
+
+
+
 .hidden{
   display: none;
 }
