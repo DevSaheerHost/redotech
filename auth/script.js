@@ -68,6 +68,8 @@ const handleSubmit = async (e) => {
     setError('Password minimum 6 char');
     return
   }
+  authSubmitBtn.textContent='Requesting...'  
+  authSubmitBtn.disabled=true
   try {
     if (App.auth.mode === 'login') {
       await signInWithEmailAndPassword(auth, email, password);
@@ -75,6 +77,10 @@ const handleSubmit = async (e) => {
       await createUserWithEmailAndPassword(auth, email, password);
     }
   } catch (err) {
+      authSubmitBtn.disabled=false;
+      authSubmitBtn.textContent=App.auth.mode==='login'?'Login':'Create account'
+
+
     setError(getAuthErrorMessage(err))
   } finally {
     setBusy(false);
