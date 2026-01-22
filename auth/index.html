@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin login</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+      <div class="auth-card">
+      <div>
+        <h1>Service Center</h1>
+        <p class="muted">
+          Sign in to manage repair tickets and share live status with customers.
+        </p>
+      </div>
+      <form class="form">
+        <label class="field">
+          <span>Email</span>
+          <input
+            type="email"
+            placeholder="owner@example.com"
+            required
+            id="email"
+          />
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input
+            type="password"
+            placeholder="********"
+            required
+            id="password"
+          />
+        </label>
+        <button class="primary" type="submit" id="authSubmitBtn">
+          Login 
+        </button>
+      </form>
+      <p class="error"></p>
+      <p class="muted switcher">
+        <span id="authModeLabel">Don't have an account?</span>
+        <button
+          type="button"
+          class="ghost"
+          id="switchMode"
+        >
+          Create one
+        </button>
+      </p>
+    </div>
+    
+    <script src="./script.js" type="module"></script>
+</body>
+
+</html>

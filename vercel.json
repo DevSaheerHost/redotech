@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/track/:uid/:cid",
+      "destination": "/track/index.html"
+    }
+  ]
+}

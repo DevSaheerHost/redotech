@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Service Tracking</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <div id="app">
+    <h2>Service Status</h2>
+    <p id="loading">Loading...</p>
+
+    <div id="card" class="hidden">
+      <h3 id="name"></h3>
+      <p id="device"></p>
+      <p id="issue"></p>
+
+      <p>
+        Status:
+        <span id="status" class="badge"></span>
+      </p>
+
+      <ul id="history"></ul>
+    </div>
+
+    <p id="error" class="error"></p>
+  </div>
+
+  <script type="module" src="./script.js"></script>
+</body>
+</html>

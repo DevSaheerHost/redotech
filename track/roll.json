@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "customers": {
+      "$uid": {
+        "$cid": {
+          ".read": true,
+          ".write": "auth != null && auth.uid === $uid"
+        }
+      }
+    }
+  }
+}
