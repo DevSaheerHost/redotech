@@ -36,8 +36,8 @@ onValue(customerRef, (snapshot) => {
   $('#device').textContent = data.device || '';
   $('#issue').textContent = data.issue || '';
   
-  const amount = Number(c.amount || 0);
-const advance = Number(c.advance || 0);
+  const amount = Number(data.amount || 0);
+const advance = Number(data.advance || 0);
 const balance = amount - advance;
 
 $('#amount').textContent = `₹${amount}`;
