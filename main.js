@@ -40,7 +40,8 @@ const setError = (msg) => {
 
 const setSaving = (v) => App.busy = v;
 
-
+App.state.customers = [];      // source of truth
+App.state.filteredCustomers = []; // what UI shows
 
 
 
@@ -86,6 +87,14 @@ const fetchData = () => {
 
     parsed.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
+// ✅ single source of truth
+App.state.customers = parsed;
+App.state.filteredCustomers = parsed;
+
+// render
+setCustomers(App.state.filteredCustomers);
+saveCache(parsed);
+
     if (parsed.length === 0) {
       $('#loadingLabel').textContent = 'No customers yet.';
     } else {
@@ -93,32 +102,32 @@ const fetchData = () => {
     }
 
     // ✅ Update UI
-    setCustomers(parsed);
+    
     setLoading(false);
 
     // 💾 Save to cache
-    saveCache(parsed);
+    
 
-const searchInput=$('#rtSearchInput')
-const resultsBox = $('#rtSearchResults');
-searchInput.addEventListener('input', () => {
-    const q = searchInput.value.toLowerCase().trim();
-    resultsBox.innerHTML = '';
-    if (!q) return;
+// const searchInput=$('#rtSearchInput')
+// const resultsBox = $('#rtSearchResults');
+// searchInput.addEventListener('input', () => {
+//     const q = searchInput.value.toLowerCase().trim();
+//     resultsBox.innerHTML = '';
+//     if (!q) return;
 
-    Object.values(data).forEach(item => {
-      const hay = `${item.name} ${item.phone} ${item.ticketId}`.toLowerCase();
-console.log(hay)
-      if (hay.includes(q)) {
-        resultsBox.innerHTML += `
-          <div class="rt-result-card">
-            <div class="rt-result-name">${item.name}</div>
-            <div class="rt-result-meta">${item.phone} • ${item.device}</div>
-          </div>
-        `;
-      }
-    });
-})
+//     Object.values(data).forEach(item => {
+//       const hay = `${item.name} ${item.phone} ${item.ticketId}`.toLowerCase();
+// console.log(hay)
+//       if (hay.includes(q)) {
+//         resultsBox.innerHTML += `
+//           <div class="rt-result-card">
+//             <div class="rt-result-name">${item.name}</div>
+//             <div class="rt-result-meta">${item.phone} • ${item.device}</div>
+//           </div>
+//         `;
+//       }
+//     });
+// })
 
   });
 
@@ -130,6 +139,67 @@ const setCustomers=(d)=>{
 const setLoading = (v) => App.loading = v;
 
 
+
+
+const searchInput = $('#rtSearchInput');
+const resultsBox = $('#rtSearchResults');
+
+if (searchInput) {
+  searchInput.addEventListener('input', () => {
+    applySearchAndFilters();
+  });
+}
+
+
+
+function applySearchAndFilters() {
+  const q = (searchInput?.value || '').toLowerCase().trim();
+
+  const fromDate = filterFromDate?.value;
+  const toDate = filterToDate?.value;
+  const minAmount = Number(filterMinAmount?.value || 0);
+  const maxAmount = Number(filterMaxAmount?.value || Infinity);
+  const name = (filterName?.value || '').toLowerCase();
+  const phone = filterPhone?.value || '';
+
+  const filtered = App.state.customers.filter(c => {
+    // 🔎 Search
+    const hay = `${c.name} ${c.phone} ${c.device} ${c.issue}`.toLowerCase();
+    if (q && !hay.includes(q)) return false;
+
+    // 👤 Name
+    if (name && !c.name?.toLowerCase().includes(name)) return false;
+
+    // 📞 Phone
+    if (phone && !String(c.phone || '').includes(phone)) return false;
+
+    // 💰 Amount
+    const amt = Number(c.amount || 0);
+    if (amt < minAmount || amt > maxAmount) return false;
+
+    // 📅 Date
+    if (fromDate || toDate) {
+      const created = new Date(c.createdAt || 0).toISOString().slice(0,10);
+      if (fromDate && created < fromDate) return false;
+      if (toDate && created > toDate) return false;
+    }
+
+    return true;
+  });
+
+  App.state.filteredCustomers = filtered;
+  setCustomers(filtered);
+
+  // Optional: show count
+  //console.log(filtered);
+}
+
+
+
+function applyFilters() {
+  applySearchAndFilters();
+  closeFilterPopup();
+}
 
 
 
@@ -510,26 +580,7 @@ function closeFilterPopup() {
   document.getElementById('rtFilterPopup').classList.remove('active');
 }
 
-function applyFilters() {
-  const fromDate = filterFromDate.value;
-  const toDate = filterToDate.value;
-  const minAmount = filterMinAmount.value;
-  const maxAmount = filterMaxAmount.value;
-  const name = filterName.value.toLowerCase();
-  const phone = filterPhone.value;
 
-  console.log({
-    fromDate,
-    toDate,
-    minAmount,
-    maxAmount,
-    name,
-    phone
-  });
-
-  // Here you apply filter logic to your list / Firebase data
-  closeFilterPopup();
-}
 
 $('#openSearchView').onclick=()=>openSearchModal()
 $('#closeSearchModal').onclick=()=>closeSearchModal()
