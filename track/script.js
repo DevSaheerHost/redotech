@@ -35,6 +35,18 @@ onValue(customerRef, (snapshot) => {
   $('#name').textContent = data.name || '';
   $('#device').textContent = data.device || '';
   $('#issue').textContent = data.issue || '';
+  
+  const amount = Number(c.amount || 0);
+const advance = Number(c.advance || 0);
+const balance = amount - advance;
+
+$('#amount').textContent = `₹${amount}`;
+$('#advance').textContent = `₹${advance}`;
+$('#balance').textContent = `₹${balance}`;
+
+if (balance <= 0) {
+  $('#balance').classList.add('clear');
+}
 
   // STATUS (reset + update)
   const statusEl = $('#status');

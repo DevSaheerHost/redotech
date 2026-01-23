@@ -105,4 +105,41 @@
   text-align:center;
 }
 
+
+
+.payment-info {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.payment-info .label {
+  display: block;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.payment-info .value {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.payment-info .adv {
+  color: #38bdf8;
+}
+
+.payment-info .balance {
+  color: #f87171; /* default = due */
+}
+
+.payment-info .balance.clear {
+  color: #4ade80; /* when 0 balance */
+}
+
 .hidden{ display:none }
