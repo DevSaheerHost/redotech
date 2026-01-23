@@ -80,7 +80,3 @@ if (balance <= 0) {
 
 
 
-if (window.lastStatus && window.lastStatus !== data.status) {
-  alert('Status updated to: ' + data.status);
-}
-window.lastStatus = data.status;
