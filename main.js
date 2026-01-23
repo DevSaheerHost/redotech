@@ -502,8 +502,40 @@ function closeSearchModal() {
 
 }
 
+function openFilterPopup() {
+  document.getElementById('rtFilterPopup').classList.add('active');
+}
+
+function closeFilterPopup() {
+  document.getElementById('rtFilterPopup').classList.remove('active');
+}
+
+function applyFilters() {
+  const fromDate = filterFromDate.value;
+  const toDate = filterToDate.value;
+  const minAmount = filterMinAmount.value;
+  const maxAmount = filterMaxAmount.value;
+  const name = filterName.value.toLowerCase();
+  const phone = filterPhone.value;
+
+  console.log({
+    fromDate,
+    toDate,
+    minAmount,
+    maxAmount,
+    name,
+    phone
+  });
+
+  // Here you apply filter logic to your list / Firebase data
+  closeFilterPopup();
+}
+
 $('#openSearchView').onclick=()=>openSearchModal()
 $('#closeSearchModal').onclick=()=>closeSearchModal()
+$('#openFilterPopup').onclick=()=>openFilterPopup()
+$('#closeFilterPopup').onclick=()=>closeFilterPopup()
+$('#applyFilters').onclick=()=>applyFilters()
 
 
 

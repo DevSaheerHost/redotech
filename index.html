@@ -209,6 +209,64 @@
 </div>
 
 
+
+
+
+
+<!-- Open Filter Button -->
+<button class="rt-filter-btn" id="openFilterPopup">
+  Filters
+</button>
+
+<!-- Filter Popup -->
+<div class="rt-filter-popup" id="rtFilterPopup">
+  <div class="rt-filter-sheet">
+
+    <div class="rt-filter-handle"></div>
+
+    <div class="rt-filter-header">
+      <h3>Filter Results</h3>
+      <button id="closeFilterPopup">Done</button>
+    </div>
+
+    <!-- Date -->
+    <div class="rt-filter-group">
+      <label>Date Range</label>
+      <div class="rt-filter-row">
+        <input type="date" id="filterFromDate">
+        <input type="date" id="filterToDate">
+      </div>
+    </div>
+
+    <!-- Amount -->
+    <div class="rt-filter-group">
+      <label>Amount</label>
+      <div class="rt-filter-row">
+        <input type="number" id="filterMinAmount" placeholder="Min ₹">
+        <input type="number" id="filterMaxAmount" placeholder="Max ₹">
+      </div>
+    </div>
+
+    <!-- Name -->
+    <div class="rt-filter-group">
+      <label>Customer Name</label>
+      <input type="text" id="filterName" placeholder="Enter name">
+    </div>
+
+    <!-- Phone -->
+    <div class="rt-filter-group">
+      <label>Phone Number</label>
+      <input type="text" id="filterPhone" placeholder="Enter number">
+    </div>
+
+    <button class="rt-filter-apply" id="applyFilters">
+      Apply Filters
+    </button>
+
+  </div>
+</div>
+
+
   <script type="module" src="./main.js"></script>
   
   <script>
