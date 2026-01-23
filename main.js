@@ -143,48 +143,60 @@ const onStatusChange = (e) => {
 const StatusBadge = (status) =>
   `<span class="badge ${status}">${status}</span>`;
 
-const getCustomerList=c=>`
+const getCustomerList = c => {
+  const amount = Number(c.amount || 0);
+  const advance = Number(c.advance || 0);
+  const balance = amount - advance;
 
-
+  return `
   <li class="list-item">
-                  <div class="item-main">
-                    <div>
-                      <p class="title">
-                        ${c.name}
-                        ${StatusBadge(c.status)}
-                      </p>
-                      <p class="muted small">
-                        ${c.device} • <a href="tel:${c.phone}">${c.phone}</a>
+    <div class="item-main">
+      <div>
+        <p class="title">
+          ${c.name}
+          ${StatusBadge(c.status)}
+        </p>
 
-                      </p>
-                      <p class="muted small">${c.issue}</p>
-                    </div>
-                  </div>
-                  <div class="item-actions">
-                  
-                  <select data-id="${c.id}">
-      <option value="pending" ${c.status === 'pending' ? 'selected' : ''}>Pending</option>
-      <option value="in-progress" ${c.status === 'in-progress' ? 'selected' : ''}>In progress</option>
-      <option value="waiting-parts" ${c.status === 'waiting-parts' ? 'selected' : ''}>Waiting for parts</option>
-      <option value="ready" ${c.status === 'ready' ? 'selected' : ''}>Ready for pickup</option>
-      <option value="done" ${c.status === 'done' ? 'selected' : ''}>Done</option>
-    </select>
-    
-<div class="tool">
-  <button class="ghost delete-btn" data-id="${c.id}">
-       Delete
-    </button>
-     <button class="ghost edit-btn" data-id="${c.id}">
-       Edit
-    </button>
-</div>
-                    <button class="ghost copy-btn" data-url="${c.trackingUrl}">
-                      Copy tracking link
-                    </button>
-                  </div>
-                </li>
-                `
+        <p class="muted small">
+          ${c.device} • <a href="tel:${c.phone}">${c.phone}</a>
+        </p>
 
+        <p class="muted small">${c.issue}</p>
+
+        <!-- 💰 Finance Row -->
+        <div class="finance-row">
+          <span>Total: <b>₹${amount}</b></span>
+          <span>Advance: <b class="adv">₹${advance}</b></span>
+          <span>Balance: 
+            <b class="${balance > 0 ? 'bal-due' : 'bal-clear'}">
+              ₹${balance}
+            </b>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-actions">
+      <select data-id="${c.id}">
+        <option value="pending" ${c.status === 'pending' ? 'selected' : ''}>Pending</option>
+        <option value="in-progress" ${c.status === 'in-progress' ? 'selected' : ''}>In progress</option>
+        <option value="waiting-parts" ${c.status === 'waiting-parts' ? 'selected' : ''}>Waiting for parts</option>
+        <option value="ready" ${c.status === 'ready' ? 'selected' : ''}>Ready for pickup</option>
+        <option value="done" ${c.status === 'done' ? 'selected' : ''}>Done</option>
+      </select>
+
+      <div class="tool">
+        <button class="ghost delete-btn" data-id="${c.id}">Delete</button>
+        <button class="ghost edit-btn" data-id="${c.id}">Edit</button>
+      </div>
+
+      <button class="ghost copy-btn" data-url="${c.trackingUrl}">
+        Copy tracking link
+      </button>
+    </div>
+  </li>
+  `;
+}
 
 
 
@@ -248,7 +260,9 @@ const handleAdd = async (e) => {
   phone: `91${$('#number').value}`,
   device: $('#device').value,
   issue: $('#issue').value,
-  status: 'pending'
+  status: 'pending',
+  amount: $('#amount').value,
+  advance : $('#advance').value
 };
 
 
@@ -370,6 +384,8 @@ if (deleteBtn) {
     $('#number').value = data.phone || '';
     $('#device').value = data.device || '';
     $('#issue').value = data.issue || '';
+    $('#amount').value = data.amount || '';
+    $('#advance').value = data.advance || '';
 
     App.state.editingCustomerId = id;
     location.hash = 'formView';

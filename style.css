@@ -407,6 +407,33 @@ backdrop-filter: blur(2px);
   z-index:999;
 }
 
+
+
+.finance-row {
+  margin-top: 6px;
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.finance-row b {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.finance-row .adv {
+  color: #38bdf8; /* blue */
+}
+
+.finance-row .bal-due {
+  color: #f87171; /* red = due */
+}
+
+.finance-row .bal-clear {
+  color: #4ade80; /* green = clear */
+}
+
 .hidden{
   display: none;
 }
