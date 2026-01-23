@@ -231,7 +231,7 @@ const renderSPA = () => {
    // el.classList.remove('hidden', el.id === page);
    el.classList.add('hidden')
   });
-  $(`#${page}`).classList.remove('hidden')
+  $(`#${page}`)&& $(`#${page}`).classList.remove('hidden')
 };
 
 window.addEventListener('hashchange', renderSPA);
@@ -257,7 +257,7 @@ const handleAdd = async (e) => {
   
   App.ui.form = {
   name: $('#name').value,
-  phone: `91${$('#number').value}`,
+  phone: $('#number').value,
   device: $('#device').value,
   issue: $('#issue').value,
   status: 'pending',
@@ -462,3 +462,24 @@ const loadCache = () => {
     return null;
   }
 };
+
+
+// openSearchView
+
+function openSearchModal() {
+  document.getElementById('searchView').classList.remove('hidden');
+  setTimeout(() => {
+    document.getElementById('rtSearchInput').focus();
+  }, 50);
+  
+  window.location.hash='searchView'
+}
+
+function closeSearchModal() {
+  document.getElementById('searchView').classList.add('hidden');
+    window.history.back()
+
+}
+
+$('#openSearchView').onclick=()=>openSearchModal()
+$('#closeSearchModal').onclick=()=>closeSearchModal()

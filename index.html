@@ -49,19 +49,40 @@
 </head>
 
 <body>
+ <button id="installBtn" class="install-btn hidden">
+  📲 Install RedoTech App
+</button>
   <section style="display:none">
   <h1>RedoTech Mobile Service Center</h1>
   <p>RedoTech provides fast mobile phone repair, service tracking, and real-time repair status updates.</p>
   <p>Track your phone repair online with RedoTech service center system.</p>
+  
+  
+  <!-- Trigger stays same -->
+<div class="rt-search-wrapper" onclick="openSearchModal()">
+  <svg xmlns="http://www.w3.org/2000/svg" class="rt-search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+  </svg>
+  <span class="rt-search-placeholder">Search tickets, name, phone...</span>
+</div>
+
+
+
+
 </section>
     <div class="page">
       <header class="topbar">
         <div>
           <h1>Repair desk</h1>
-          <p class="muted">Track devices and share live status updates.</p>
-          <button id="installBtn" class="install-btn hidden">
-  📲 Install RedoTech App
-</button>
+        <div class="rt-search-wrapper" id="openSearchView">
+  <svg xmlns="http://www.w3.org/2000/svg" class="rt-search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+  </svg>
+
+  <span class="rt-search-placeholder mute">
+    Search by name, phone, ticket ID...
+  </span>
+</div>
         </div>
         <div class="user-chip">
           <span id="emailLabel"></span>
@@ -165,6 +186,28 @@
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
 </svg>
     </button>
+    
+    
+    
+    
+    <!-- Fullscreen Search -->
+<div class="rt-search-modal view hidden" id="searchView">
+  
+  <div class="rt-search-header">
+    <input 
+      type="text" 
+      id="rtSearchInput"
+      placeholder="Search customer, phone, ticket ID..."
+      autofocus
+    />
+    <button class="rt-search-cancel" id="closeSearchModal">Cancel</button>
+  </div>
+
+  <div class="rt-search-results" id="rtSearchResults">
+    <!-- Results injected here -->
+  </div>
+</div>
+
 
   <script type="module" src="./main.js"></script>
   
