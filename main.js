@@ -99,6 +99,27 @@ const fetchData = () => {
     // 💾 Save to cache
     saveCache(parsed);
 
+const searchInput=$('#rtSearchInput')
+const resultsBox = $('#rtSearchResults');
+searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    resultsBox.innerHTML = '';
+    if (!q) return;
+
+    Object.values(data).forEach(item => {
+      const hay = `${item.name} ${item.phone} ${item.ticketId}`.toLowerCase();
+console.log(hay)
+      if (hay.includes(q)) {
+        resultsBox.innerHTML += `
+          <div class="rt-result-card">
+            <div class="rt-result-name">${item.name}</div>
+            <div class="rt-result-meta">${item.phone} • ${item.device}</div>
+          </div>
+        `;
+      }
+    });
+})
+
   });
 
   return () => unsub();
@@ -483,3 +504,6 @@ function closeSearchModal() {
 
 $('#openSearchView').onclick=()=>openSearchModal()
 $('#closeSearchModal').onclick=()=>closeSearchModal()
+
+
+
