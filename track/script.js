@@ -80,7 +80,7 @@ if (balance <= 0) {
 
 
 
-const fedbackRef = ref(db, `customers/feedBack/${uid ||'unknownUID'}`);
+const fedbackRef = ref(db, `feedBack/${uid ||'unknownUID'}`);
 
 
 
