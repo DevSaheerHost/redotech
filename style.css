@@ -696,6 +696,18 @@ h1{
 }
 
 
+.tot-flex{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.total{
+  font-weight: 600;
+  color: #4ade80;
+}
+
 .hidden{
   display: none;
 }

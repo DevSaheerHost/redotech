@@ -133,7 +133,14 @@ saveCache(parsed);
 
   return () => unsub();
 };
+
+
+const calculateTotalAmount = (customers) =>
+  customers.reduce((sum, c) => sum + Number(c.amount || 0), 0);
+  
 const setCustomers=(d)=>{
+  const total = calculateTotalAmount(d)
+$('#total').textContent=`₹${total || 0}`;
   $('#customerList').innerHTML = d.map((c)=>getCustomerList(c)).join('')
 }
 const setLoading = (v) => App.loading = v;
@@ -143,7 +150,6 @@ const setLoading = (v) => App.loading = v;
 
 const searchInput = $('#rtSearchInput');
 const resultsBox = $('#rtSearchResults');
-
 if (searchInput) {
   searchInput.addEventListener('input', () => {
     applySearchAndFilters();
