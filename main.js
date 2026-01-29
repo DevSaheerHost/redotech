@@ -323,7 +323,10 @@ const renderSPA = () => {
    el.classList.add('hidden')
   });
   $(`#${page}`)&& $(`#${page}`).classList.remove('hidden')
+  if(page ==='formView')$('#name').focus()
 };
+
+
 
 window.addEventListener('hashchange', renderSPA);
 window.addEventListener('DOMContentLoaded', renderSPA);

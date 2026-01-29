@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue } 
+import { getDatabase, ref, onValue, push } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 import { firebaseConfig } from "../firebase/config.js";
 
@@ -80,3 +80,14 @@ if (balance <= 0) {
 
 
 
+const fedbackRef = ref(db, `customers/feedBack/${uid ||'unknownUID'}`);
+
+
+
+
+
+push(fedbackRef, {
+  customerId: customerId || 'unknownCID',
+  title: 'Tracing',
+  createdAt: Date.now()
+});
